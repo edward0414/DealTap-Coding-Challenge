@@ -9,6 +9,9 @@ Run the command "python app.py" in the command line.
 
 Then the server will be up and running on the localhost port 4000. 
 
+   * Use virtualenv
+   * Do not need to run db_create.py. The db is created already. 
+
 
 ### Specifications
 
@@ -38,7 +41,7 @@ request
 - info: {
 	ip: String,
 	device: String,
-	created: String
+	time: String
 }
 
 
@@ -47,5 +50,6 @@ request
 Similar to how to run the main app.py file, run the command "python test.py" to test the endpoints.
 
 Test cover:
+
 
 

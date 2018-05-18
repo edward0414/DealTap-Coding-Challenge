@@ -2,6 +2,8 @@
 
 from app import db
 
-db.createCollection("counters")
+db.create_collection('counters')
 
-db.counters.insert({_id:"URLid",sequence_value:0})
+table = db['counters']
+
+table.insert_one({'_id':"URLid",'sequence_value':0})

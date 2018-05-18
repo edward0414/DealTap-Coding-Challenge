@@ -18,12 +18,17 @@ db = client['dealtap_challenge']
 #To-Do:
 #-Counter
 #	-> for auto-increment id
-#-Post to /longURL (sender, conversation_id, message)
-#	-> validating incoming data (check if its the right format)
-#	-> insert to the db according to the conversation_id
-#-Get to /conversations/<conversation_id>
-#	-> validating incoming id
-#	-> query the db
+#-Post to /index longURL convert form
+#	-> add the longURL to the collection URL (id, longURL, shortURL)
+#	-> use the id (from auto-increment) to create a shortURL address
+#	-> return a HTML page with the shortURL
+#-Get to /shortURL/<shortURL>
+#	-> record the request info (ip, device, time)
+#	-> redirect to the longURL page by querying the db
+#
+#-Post to /index shortURL info form
+#	-> query the stats of this link
+#	-> redirect to the shortURL info page
 
 class Converter:
 
@@ -32,9 +37,36 @@ class Converter:
 
 	def convertToURL(self, num):
 
+		result = ''
+
 		while num > 0:
+
+			remain = num // self._base
+			dig = num % self._base
+			num = remain
+			result = self._letters[dig] + result
+
+		return result
+
+	def convertToNum(self, url):
+
+		num = 0
+
+		for char in url:
+			num = num * self._base + self._letters.index(char)
+
+		return num
+
+
+
+
 
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port=4000)
+	b = Converter()
+	url = b.convertToURL(3)
+	print url
+	print b.convertToNum(url)
+
+    #app.run(host='0.0.0.0',port=4000)
