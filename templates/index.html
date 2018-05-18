@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+    
+<div style="padding:0 0 5px 10px;">
+    {% if error %}
+    <p style="color:red;"><strong>Error:</strong> {{ error }}</p>
+    {% endif %}
+</div>
+
+<div>
+    <h1>Short URL Generator</h1>
+    <br>
+    <form class="form" action="" method="post">
+        <input type="longURL" placeholder="Long URL" name="longURL" class="input" required autofocus>
+        <input class="btn" type="submit" value="Shorten">
+    </form> 
+    <br>
+    <div style="padding:0 0 5px 10px;">
+    {% if shortURL %}
+    <p><strong>Generated Short URL:</strong> {{ shortURL }}</p>
+    {% endif %}
+</div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+

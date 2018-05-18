@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Short URL Generator</title>
+    
+    <link href="{{ url_for('static', filename = 'style.css') }}" rel="stylesheet">
+    
+</head>
+ 
+<body>
+ 
+    <div class="container">
+      
+    <!-- child template -->
+    {% block content %}{% endblock %}
+ 
+    <footer class="footer">
+        <p>&copy; Edward Feng</p>
+    </footer>
+        
+    </div>
+</body>
+ 
+</html>

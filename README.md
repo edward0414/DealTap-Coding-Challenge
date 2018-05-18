@@ -1,4 +1,4 @@
-# DealTap Coding Challenge
+# URL Shortener - DealTap Coding Challenge
 
 ### Set Up
 
@@ -22,7 +22,7 @@ It is a NoSQL database using MongoDB. Hosted on mlab.
 
 Schema:
 
-counter
+counters
 - _id: String
 - sequence_val: Integer
 
@@ -50,6 +50,16 @@ request
 Similar to how to run the main app.py file, run the command "python test.py" to test the endpoints.
 
 Test cover:
+1) correct behaviour of /conversations endpoint
+2) incorrect behaviour of /conversations endpoint
+3) correct behaviour of /messages endpoint
+4) incorrect behaviour of /messages endpoint
+4) correct process of creating a new conversation
+
+
+### Down the road
+
+As the database gets bigger, we could implement data sharding to dael with scalibilty problems. 
 
 
 
