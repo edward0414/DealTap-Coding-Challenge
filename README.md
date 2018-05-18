@@ -36,8 +36,7 @@ url
 ]
 
 request
-- _id: given int
-- url-id: Integer
+- shortURL: String
 - info: {
 	ip: String,
 	device: String,

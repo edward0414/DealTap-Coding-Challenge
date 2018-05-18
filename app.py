@@ -116,6 +116,7 @@ def short(shortURL):
     info = request.user_agent
     
     query = {
+        'shortURL': shortURL,
         'ip_addr': request.remote_addr,
         'platform': info.platform,
         'browser': info.browser,
@@ -139,5 +140,27 @@ def short(shortURL):
         
         return render_template('index.html', error=error, shortURL=shortURL)
 
+@app.route('/info/<shortURL>')
+def info(shortURL):
+    info = None
+    error = None
+    
+    print 10
+    
+    query = {'shortURL': shortURL}
+    
+    result = db['info'].find(query)
+    
+    if result is None:
+        print 11
+        error = 'Invalud shortURL entered. This shortURL has not been used.'
+    
+    else:
+        print 12
+        info = result
+    
+    return render_template('info.html', error=error, info=info)
+    
+    
 if __name__ == "__main__":
     app.run(host='0.0.0.0',port=4000)

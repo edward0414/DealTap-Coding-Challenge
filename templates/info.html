@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+    
+<div style="padding:0 0 5px 10px;">
+    {% if error %}
+    <p style="color:red;"><strong>Error:</strong> {{ error }}</p>
+    {% endif %}
+</div>
+
+<div>
+    <h1>Short URL Info</h1>
+    <table class='table'>
+        <thead>
+            <th>IP</th>
+            <th>Platform</th>
+            <th>Browser</th>
+            <th>Version</th>
+            <th>Time</th>
+        </thead>
+        {% for row in info %}
+        <tr data-toggle="modal" data-target="#transInfo" style="cursor:pointer;">
+            <td>{{row["ip_addr"]}}</td>
+            <td>{{row["platform"]}}</td>
+            <td>{{row["browser"]}}</td>
+            <td>{{row["version"]}}</td>
+            <td>{{row["time"]}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}
+
+
