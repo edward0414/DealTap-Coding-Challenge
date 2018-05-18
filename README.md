@@ -1,10 +1,27 @@
-# Coding Challenge
+# DealTap Coding Challenge
 
-## Setup
+### Set Up
 
-## Database
+Set up the environment by installing the packages in the requirements.txt file.
+-> "pip install pymongo Flask" or "pip install -r requirements.txt"
 
-## Specifications
+Run the command "python app.py" in the command line. 
 
-## Test
+Then the server will be up and running on the localhost port 4000. 
+
+
+
+### Specifications
+
+
+### Database
+
+
+
+
+### Test
+
+
+
+
 
