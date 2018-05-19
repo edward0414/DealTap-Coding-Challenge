@@ -10,6 +10,7 @@
 
 <div>
     <h1>Short URL Info</h1>
+    {% if info %}
     <table class='table'>
         <thead>
             <th>IP</th>
@@ -18,6 +19,7 @@
             <th>Version</th>
             <th>Time</th>
         </thead>
+        
         {% for row in info %}
         <tr data-toggle="modal" data-target="#transInfo" style="cursor:pointer;">
             <td>{{row["ip_addr"]}}</td>
@@ -27,6 +29,7 @@
             <td>{{row["time"]}}</td>
         </tr>
         {% endfor %}
+    {% endif %}
     </table>
 </div>
 

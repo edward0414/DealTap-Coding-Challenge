@@ -3,7 +3,7 @@
 ### Set Up
 
 Set up the environment by installing the packages in the requirements.txt file.
--> "pip install pymongo Flask" or "pip install -r requirements.txt"
+-> "pip install pymongo Flask requests" or "pip install -r requirements.txt"
 
 Run the command "python app.py" in the command line. 
 
@@ -37,10 +37,11 @@ url
 
 request
 - shortURL: String
-- info: {
-	ip: String,
-	device: String,
-	time: String
+- ip: String,
+- platform: String,
+- browser: String,
+- version: String,
+- time: String
 }
 
 
@@ -58,7 +59,7 @@ Test cover:
 
 ### Down the road
 
-As the database gets bigger, we could implement data sharding to dael with scalibilty problems. 
+As the database gets bigger, I could implement data sharding to dael with scalibilty problems. 
 
 
 

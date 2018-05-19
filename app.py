@@ -4,6 +4,7 @@
 from flask import Flask, request, jsonify, json, redirect, render_template, url_for
 from datetime import datetime
 from pymongo import MongoClient, ReturnDocument
+import requests
 
 # create the application object
 app = Flask(__name__)
@@ -41,6 +42,19 @@ def getNextSequenceValue(sequenceName):
     return result['sequence_value']
 
 
+def urlValidator(url):
+    #a url validator that checks if the given url gives back http status code of 2XX
+    try: 
+        resp = requests.get(url)
+        print resp.status_code
+    
+        if str(resp.status_code)[0] != '2':
+            return False
+        else:
+            return True
+    
+    except:
+        return False
 
 class Converter:
 
@@ -68,8 +82,6 @@ class Converter:
 			num = num * self._base + self._letters.index(char)
 
 		return num
-
-
     
     
 @app.route('/', methods=['GET', 'POST'])
@@ -77,20 +89,20 @@ def index():
     
     error = None
     shortURL = None
-    info = None
 
     if request.method == 'POST':
-        print 1
         longURL = request.form['longURL']
 
         #check if the url is valid
+        if not urlValidator(longURL):
+            error = "This URL does not seem valid. Perhaps you forgot to add http/https in front of it?"
+            return render_template('index.html', error=error, shortURL=shortURL)
 
         table = db['url']
 
         result = table.find_one({"longURL": longURL})
 
         if result is None:
-            print 2
             seq = getNextSequenceValue('URLid')
 
             converter = Converter()
@@ -102,14 +114,15 @@ def index():
                 'shortURL': shortURL
             }
             table.insert_one(query)
+            
+            shortURL = '/short/' + shortURL
 
         else:
-            print 3
             error = 'This long URL exists in the database already! Here is the shorten URL: ' + url_for('short', shortURL=result['shortURL'])
 
-    return render_template('index.html', error=error, shortURL=shortURL, info=info)
+    return render_template('index.html', error=error, shortURL=shortURL)
 
-@app.route('/<shortURL>')
+@app.route('/short/<shortURL>')
 def short(shortURL):
     
     #record the info about the user
@@ -123,8 +136,6 @@ def short(shortURL):
         'version': info.version,
         'time': datetime.utcnow()
     }
-    
-    print query
     
     table = db['url']
     
@@ -145,20 +156,18 @@ def info(shortURL):
     info = None
     error = None
     
-    print 10
-    
     query = {'shortURL': shortURL}
     
     result = db['info'].find(query)
     
-    if result is None:
-        print 11
-        error = 'Invalud shortURL entered. This shortURL has not been used.'
+    print "count:", result.count()
+    
+    if result.count() == 0:
+        error = 'Invalud shortURL entered.'
     
     else:
-        print 12
         info = result
-    
+        
     return render_template('info.html', error=error, info=info)
     
     
