@@ -1,3 +1,5 @@
+from random import randint 
+
 class Converter:
     """
     A converter that generates a short url using the _id of the document in the db.
@@ -38,4 +40,22 @@ class Converter:
         return num
     
     
-    
+if __name__ == "__main__":
+    try:
+        conv = Converter()
+        i = 0
+        while i < 10:
+            x = randint(1, 9999)
+            short = conv.convertToURL(x)
+            num = conv.convertToNum(short)
+            assert num == x
+            i += 1
+
+        conv = Converter()
+        assert 'bb' == conv.convertToURL(63)
+        assert 'ba' == conv.convertToURL(62)
+        assert '8' == conv.convertToURL(61)
+        print "Test successful!"
+        
+    except:
+        print "Test Failed!"

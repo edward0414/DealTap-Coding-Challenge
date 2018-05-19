@@ -11,6 +11,7 @@
 <div>
     <h1>Short URL Info</h1>
     {% if info %}
+    <div class="table-wrapper">
     <table class='table'>
         <thead>
             <th>IP</th>
@@ -31,6 +32,7 @@
         {% endfor %}
     {% endif %}
     </table>
+    </div>
 </div>
 
 {% endblock %}

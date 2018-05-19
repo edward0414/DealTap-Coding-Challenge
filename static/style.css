@@ -27,6 +27,10 @@ body {
     height: 34px;
 }
 
+.table-wrapper {
+    overflow: auto;
+}
+
 .table {
     text-align: center;
     margin:auto;
