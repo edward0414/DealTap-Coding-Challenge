@@ -6,6 +6,8 @@ from datetime import datetime
 from pymongo import MongoClient, ReturnDocument
 import requests
 
+from util import Converter
+
 # create the application object
 app = Flask(__name__)
 
@@ -49,7 +51,6 @@ def urlValidator(url):
     #Not the best one but this will do...
     try: 
         resp = requests.get(url)
-        print resp.status_code
     
         if str(resp.status_code)[0] != '2':
             return False
@@ -58,46 +59,6 @@ def urlValidator(url):
     
     except:
         return False
-
-class Converter:
-    """
-    A converter that generates a short url using the _id of the document in the db.
-    Idea:
-    - Every time a long url is received, an auto-incremented id will be assigned to that long url.
-    - Then, with that id, use this converter to convert the number to a short string that represents 
-    the short url.
-    - Together, this id, the long url, and the short url will be saved into the db as a document.
-    """
-    
-	_letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-	_base = len(_letters)
-
-	def convertToURL(self, num):
-        #convert this 10-based number to 62-based number
-        #then, use the letter to represent the 62-based number
-
-		result = ''
-
-		while num > 0:
-
-			remain = num // self._base
-			dig = num % self._base
-			num = remain
-			result = self._letters[dig] + result
-
-		return result
-
-	def convertToNum(self, url):
-        #decode the url into a 62-based number
-        #then, convert it back to 10-based number (the id in the db)
-
-		num = 0
-
-		for char in url:
-			num = num * self._base + self._letters.index(char)
-
-		return num
-    
     
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -107,9 +68,10 @@ def index():
 
     if request.method == 'POST':
         longURL = request.form['longURL']
-
+        
         #check if the url is valid
         if not urlValidator(longURL):
+            
             error = "This URL does not seem valid. Perhaps you forgot to add http/https in front of it?"
             return render_template('index.html', error=error, shortURL=shortURL)
 
@@ -174,8 +136,6 @@ def info(shortURL):
     query = {'shortURL': shortURL}
     
     result = db['info'].find(query)
-    
-    print "count:", result.count()
     
     if result.count() == 0:
         error = 'Invalud shortURL entered.'
