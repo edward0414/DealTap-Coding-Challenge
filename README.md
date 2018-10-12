@@ -1,4 +1,4 @@
-# URL Shortener - DealTap Coding Challenge
+# URL Shortener
 
 ### Set Up
 
